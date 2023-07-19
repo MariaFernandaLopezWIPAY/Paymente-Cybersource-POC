@@ -5,7 +5,7 @@ import Invokers.ApiClient;
 import Invokers.ApiException;
 import Model.*;
 import com.cybersource.authsdk.core.MerchantConfig;
-import com.wipay.payment.cybersource.config.Configuration;
+import com.wipay.payment.cybersource.config.ConfigurationCybersource;
 import com.wipay.payment.cybersource.model.Payment;
 
 import java.util.Properties;
@@ -65,7 +65,7 @@ public class PaymentRequest {
         
         
    
-            merchantProp = Configuration.getMerchantDetails();
+            merchantProp = ConfigurationCybersource.getMerchantDetails();
             ApiClient apiClient = new ApiClient();
             MerchantConfig merchantConfig = new MerchantConfig(merchantProp);
             apiClient.merchantConfig = merchantConfig;

@@ -1,15 +1,20 @@
 package com.wipay.payment.cybersource.config;
 
-import java.util.Properties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class Configuration {
+import java.util.Properties;
+@Component
+public class ConfigurationCybersource {
+    @Autowired
+    private static ConfigurationInputProperties config;
     public static Properties getMerchantDetails() {
         Properties props = new Properties();
         
         // HTTP_Signature = http_signature and JWT = jwt
-        props.setProperty("authenticationType", "http_signature");
-        props.setProperty("merchantID", "rosenstiehl_sandbox");
-        props.setProperty("runEnvironment", "apitest.cybersource.com");
+        props.setProperty("authenticationType","http_signature"); //config.getAuthenticationType());
+        props.setProperty("merchantID", "rosenstiehl_sandbox"); //config.getMerchantID());
+        props.setProperty("runEnvironment","apitest.cybersource.com"); //config.getRunEnvironment());
         props.setProperty("requestJsonPath", "src/main/resources/request.json");
         
         // MetaKey Parameters
@@ -47,7 +52,7 @@ public class Configuration {
         return props;
         
     }
-    
+    /**
     public static Properties getAlternativeMerchantDetails() {
         Properties props = new Properties();
         
@@ -79,7 +84,7 @@ public class Configuration {
         
         return props;
         
-    }
+    }*/
     
 }
 
