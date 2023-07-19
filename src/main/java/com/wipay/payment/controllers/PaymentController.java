@@ -1,5 +1,6 @@
 package com.wipay.payment.controllers;
 
+import com.wipay.payment.cybersource.model.DTOs.PaymentResponseDTO;
 import com.wipay.payment.cybersource.model.Payment;
 import com.wipay.payment.services.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class PaymentController {
     private PaymentService paymentService;
     
     @PostMapping
-    public ResponseEntity<String> createPayment(@RequestBody Payment payment){
+    public ResponseEntity<PaymentResponseDTO> createPayment(@RequestBody Payment payment){
         try {
             var response = paymentService.createPaymentRequest(payment);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
