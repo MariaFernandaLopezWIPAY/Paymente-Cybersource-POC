@@ -23,39 +23,39 @@ public class ConfigurationCybersource {
         props.setProperty("authenticationType",config.getAuthenticationType());
         props.setProperty("merchantID", config.getMerchantID());
         props.setProperty("runEnvironment",config.getRunEnvironment());
-        props.setProperty("requestJsonPath", "src/main/resources/request.json");
+        props.setProperty("requestJsonPath", config.getRequestJsonPath());
         
         // MetaKey Parameters
-        props.setProperty("portfolioID", "");
-        props.setProperty("useMetaKey", "false");
+        props.setProperty("portfolioID",config.getPortfolioID());
+        props.setProperty("useMetaKey", config.getUseMetaKey());
         
         // JWT Parameters
-        props.setProperty("keyAlias", "testrest");
-        props.setProperty("keyPass", "testrest");
-        props.setProperty("keyFileName", "testrest");
+        props.setProperty("keyAlias", config.getKeyAlias());
+        props.setProperty("keyPass", config.getKeyPass());
+        props.setProperty("keyFileName", config.getKeyFileName());
         
         // P12 key path. Enter the folder path where the .p12 file is located.
         
-        props.setProperty("keysDirectory", "src/main/resources");
+        props.setProperty("keysDirectory", config.getKeysDirectory());
         // HTTP Parameters
-        props.setProperty("merchantKeyId", "5c646231-d25a-4c87-82a1-5e9f8c3e0ee8");
-        props.setProperty("merchantsecretKey", "THteBfn245R2oenq9T9Glm6iEm+sx0ox54RjytoGJWk=");
+        props.setProperty("merchantKeyId", config.getMerchantKeyId());
+        props.setProperty("merchantsecretKey", config.getMerchantsecretKey());
         // Logging to be enabled or not.
-        props.setProperty("enableLog", "true");
+        props.setProperty("enableLog", config.getEnableLog());
         // Log directory Path
-        props.setProperty("logDirectory", "log");
-        props.setProperty("logFilename", "cybs");
+        props.setProperty("logDirectory", config.getLogDirectory());
+        props.setProperty("logFilename", config.getLogFilename());
         
         // Log file size in KB
-        props.setProperty("logMaximumSize", "5M");
+        props.setProperty("logMaximumSize", config.getLogMaximumSize());
         
         // OAuth related properties.
-        props.setProperty("enableClientCert", "false");
-        props.setProperty("clientCertDirectory", "src/main/resources");
-        props.setProperty("clientCertFile", "");
-        props.setProperty("clientCertPassword", "");
-        props.setProperty("clientId", "");
-        props.setProperty("clientSecret", "");
+        props.setProperty("enableClientCert", config.getEnableClientCert());
+        props.setProperty("clientCertDirectory", config.getClientCertDirectory());
+        props.setProperty("clientCertFile", config.getClientId());
+        props.setProperty("clientCertPassword", config.getClientCertPassword());
+        props.setProperty("clientId", config.getClientId());
+        props.setProperty("clientSecret", config.getClientSecret());
         
         return props;
         
