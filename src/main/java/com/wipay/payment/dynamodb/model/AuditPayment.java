@@ -14,6 +14,9 @@ public class AuditPayment {
     
     @DynamoDBAttribute (attributeName = "idTransaction")
     private String idTransaction;
+    private String reconciliationId;
+    
+    private String clientReferenceInformationCode;
     
     public String getId() {
         return id;
@@ -29,5 +32,21 @@ public class AuditPayment {
     
     public void setIdTransaction(String idTransaction) {
         this.idTransaction = idTransaction;
+    }
+    
+    public String getReconciliationId() {
+        return reconciliationId;
+    }
+    
+    public void setReconciliationId(String reconciliationId) {
+        this.reconciliationId = reconciliationId;
+    }
+    
+    public String getClientReferenceInformationCode() {
+        return clientReferenceInformationCode;
+    }
+    
+    public void setClientReferenceInformationCode(String clientReferenceInformationCode) {
+        this.clientReferenceInformationCode = clientReferenceInformationCode;
     }
 }
