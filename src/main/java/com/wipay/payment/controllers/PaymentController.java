@@ -19,7 +19,7 @@ public class PaymentController {
     private PaymentService paymentService;
     
     @PostMapping
-    public ResponseEntity<PaymentResponseDTO> createPayment(@RequestBody Payment payment){
+    public ResponseEntity<PaymentResponseDTO> createPayment(@RequestBody Payment payment) {
         try {
             var response = paymentService.createPaymentRequest(payment);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -29,5 +29,5 @@ public class PaymentController {
         }
     }
     
-
+    
 }

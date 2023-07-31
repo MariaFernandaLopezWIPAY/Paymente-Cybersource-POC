@@ -18,6 +18,8 @@ public class AuditPayment {
     
     private String clientReferenceInformationCode;
     
+    private String dateTransaction;
+    
     public String getId() {
         return id;
     }
@@ -48,5 +50,13 @@ public class AuditPayment {
     
     public void setClientReferenceInformationCode(String clientReferenceInformationCode) {
         this.clientReferenceInformationCode = clientReferenceInformationCode;
+    }
+    
+    public String getDateTransaction() {
+        return dateTransaction;
+    }
+    
+    public void setDateTransaction(String dateTransaction) {
+        this.dateTransaction = dateTransaction;
     }
 }

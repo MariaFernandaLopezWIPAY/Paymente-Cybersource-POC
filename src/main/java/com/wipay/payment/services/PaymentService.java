@@ -50,13 +50,18 @@ public class PaymentService {
         paymentInformation.setBinCountry(objResponse.getPaymentInformation().getBinCountry());
         paymentResponse.setPaymentInformation(paymentInformation);
         
+        buildPaymentAuditData(paymentResponse);
+        
+        return paymentResponse;
+    }
+    
+    private void buildPaymentAuditData(PaymentResponseDTO paymentResponse) {
         var data = new AuditPayment();
         data.setIdTransaction(paymentResponse.getId());
         data.setReconciliationId(paymentResponse.getReconciliationId());
         data.setClientReferenceInformationCode(paymentResponse.getClientReferenceInformation().getCode());
+        data.setDateTransaction(paymentResponse.getSubmitTimeUtc());
         var result = paymentDetailsRepository.save(data);
-        
-        return paymentResponse;
     }
     
 }
