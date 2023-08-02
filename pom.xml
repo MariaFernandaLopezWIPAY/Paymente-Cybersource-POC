@@ -35,11 +35,6 @@
             <artifactId>cybersource-rest-client-java</artifactId>
             <version>0.0.55</version>
         </dependency>
-        <dependency>
-            <groupId>com.cybersource</groupId>
-            <artifactId>SampleApiClient</artifactId>
-            <version>0.0.5</version>
-        </dependency>
 
         <!--		Dynamo Db dependencies-->
         <dependency>
@@ -51,7 +46,17 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-dynamodb</artifactId>
-			<version>1.12.487</version>
+            <version>1.12.487</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+            <version>3.1.0</version>
         </dependency>
 
 
