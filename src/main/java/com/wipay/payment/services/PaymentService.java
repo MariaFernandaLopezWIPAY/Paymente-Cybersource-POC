@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.wipay.payment.cybersource.PaymentRequest;
 import com.wipay.payment.cybersource.model.DTOs.*;
 import com.wipay.payment.cybersource.model.Payment;
+import com.wipay.payment.dynamodb.configure.DynamoDBService;
 import com.wipay.payment.dynamodb.configure.DynamoDbConfiguration;
 import com.wipay.payment.dynamodb.model.AuditPayment;
 import com.wipay.payment.repositories.PaymentDetailsRepository;
@@ -21,6 +22,9 @@ public class PaymentService {
     
     @Autowired
     private PaymentDetailsRepository paymentDetailsRepository;
+
+    @Autowired
+    private DynamoDBService dynamoDBService;
     
     public PaymentResponseDTO createPaymentRequest(Payment payment) {
         var paymentResponse = new PaymentResponseDTO();
@@ -57,6 +61,7 @@ public class PaymentService {
         paymentResponse.setPaymentInformation(paymentInformation);
         
         buildPaymentAuditData(paymentResponse);
+        System.out.println(paymentResponse);
         
         return paymentResponse;
     }
@@ -67,6 +72,7 @@ public class PaymentService {
         data.setReconciliationId(paymentResponse.getReconciliationId());
         data.setClientReferenceInformationCode(paymentResponse.getClientReferenceInformation().getCode());
         data.setDateTransaction(paymentResponse.getSubmitTimeUtc());
+        dynamoDBService.createTable("tbl_audit_payment", data.getId());
         var result = paymentDetailsRepository.save(data);
     }
 
