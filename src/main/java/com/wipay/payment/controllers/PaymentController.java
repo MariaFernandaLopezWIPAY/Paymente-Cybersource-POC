@@ -7,10 +7,7 @@ import com.wipay.payment.services.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -41,6 +38,27 @@ public class PaymentController {
             var response = paymentService.createPaymentRequest(payment);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
             
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Exception", e);
+        }
+    }
+
+    @GetMapping(value = "/getTransaction/{id}")
+    @Operation(summary = "Obtener transaccion",
+            description = "Este metodo obtiene una transaccion",
+            tags = {"Audit"})
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "OK",
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = AuditPayment.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = " Page Not Found", content = @Content),
+            @ApiResponse(responseCode = "500", description = " Internal server error - view logs server", content = @Content)})
+
+    public ResponseEntity<AuditPayment> getTransaction(@PathVariable String id){
+        try {
+            var response = paymentService.getTransaction(id);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Exception", e);
         }

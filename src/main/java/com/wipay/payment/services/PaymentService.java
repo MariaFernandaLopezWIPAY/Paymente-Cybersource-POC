@@ -1,5 +1,6 @@
 package com.wipay.payment.services;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.wipay.payment.cybersource.PaymentRequest;
 import com.wipay.payment.cybersource.model.DTOs.*;
 import com.wipay.payment.cybersource.model.Payment;
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class PaymentService {
     // TODO: Create object response bussinnes acording
+
+    @Autowired
+    private DynamoDBMapper mapper;
     private PaymentRequest paymentRequest = new PaymentRequest();
     
     @Autowired
@@ -63,5 +67,28 @@ public class PaymentService {
         data.setDateTransaction(paymentResponse.getSubmitTimeUtc());
         var result = paymentDetailsRepository.save(data);
     }
+    public AuditPayment getTransaction(String id) {
+
+        return findById(id);
+
+
+    }
+
+    public AuditPayment findById(String id){
+
+        return ReadItemByPk(id);
+
+    }
+
+    private AuditPayment ReadItemByPk(String PK){
+        try {
+            return mapper.load(AuditPayment.class, PK);
+        }
+        catch (Exception exception){
+            System.err.println(exception.getMessage());
+            return null;
+        }
+    }
+
     
 }
