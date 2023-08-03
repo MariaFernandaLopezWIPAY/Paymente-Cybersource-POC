@@ -1,9 +1,11 @@
 package com.wipay.payment.services;
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.wipay.payment.cybersource.PaymentRequest;
 import com.wipay.payment.cybersource.model.DTOs.*;
 import com.wipay.payment.cybersource.model.Payment;
+import com.wipay.payment.dynamodb.configure.DynamoDbConfiguration;
 import com.wipay.payment.dynamodb.model.AuditPayment;
 import com.wipay.payment.repositories.PaymentDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,28 +69,39 @@ public class PaymentService {
         data.setDateTransaction(paymentResponse.getSubmitTimeUtc());
         var result = paymentDetailsRepository.save(data);
     }
+
+    @Autowired
+    private DynamoDbConfiguration dynamoDBConfiguration;
+
+    public AuditPayment readAudit(String id) {
+        AmazonDynamoDB dbClient = dynamoDBConfiguration.amazonDynamoDB();
+        DynamoDBMapper mapper = new DynamoDBMapper(dbClient);
+        AuditPayment payment = mapper.load(AuditPayment.class, id);
+        System.out.println(payment);
+        return payment;
+    }
     public AuditPayment getTransaction(String id) {
-
-        return findById(id);
-
-
+        return readAudit(id);
     }
 
-    public AuditPayment findById(String id){
+//    public AuditPayment findById(String id){
+//
+//
+//        return null;
+//    }
 
-        return ReadItemByPk(id);
-
-    }
-
-    private AuditPayment ReadItemByPk(String PK){
-        try {
-            return mapper.load(AuditPayment.class, PK);
-        }
-        catch (Exception exception){
-            System.err.println(exception.getMessage());
-            return null;
-        }
-    }
+//    private AuditPayment ReadItemBy(String PK){
+//        try {
+//
+//            System.out.println(PK);
+//
+//            return mapper.load(AuditPayment.class, PK);
+//        }
+//        catch (Exception exception){
+//            System.err.println(exception.getMessage());
+//            return null;
+//        }
+//    }
 
     
 }
