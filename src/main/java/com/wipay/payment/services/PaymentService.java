@@ -5,7 +5,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.wipay.payment.cybersource.PaymentRequest;
 import com.wipay.payment.cybersource.model.DTOs.*;
 import com.wipay.payment.cybersource.model.Payment;
-import com.wipay.payment.dynamodb.configure.DynamoDBService;
+import com.wipay.payment.dynamodb.DynamoDBService;
 import com.wipay.payment.dynamodb.configure.DynamoDbConfiguration;
 import com.wipay.payment.dynamodb.model.AuditPayment;
 import com.wipay.payment.repositories.PaymentDetailsRepository;
@@ -68,6 +68,8 @@ public class PaymentService {
     
     private void buildPaymentAuditData(PaymentResponseDTO paymentResponse) {
         var data = new AuditPayment();
+        data.setPK(paymentResponse.getId()); //parametros nuevos porque los estaba poniendo nulls
+        data.setId(paymentResponse.getId()); // "       "       "        "    "       "      "
         data.setIdTransaction(paymentResponse.getId());
         data.setReconciliationId(paymentResponse.getReconciliationId());
         data.setClientReferenceInformationCode(paymentResponse.getClientReferenceInformation().getCode());
@@ -90,11 +92,7 @@ public class PaymentService {
         return readAudit(id);
     }
 
-//    public AuditPayment findById(String id){
-//
-//
-//        return null;
-//    }
+
 
 //    private AuditPayment ReadItemBy(String PK){
 //        try {

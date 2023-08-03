@@ -1,4 +1,4 @@
-package com.wipay.payment.dynamodb.configure;
+package com.wipay.payment.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ListTablesRequest;
 import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
 import com.amazonaws.services.dynamodbv2.model.ResourceInUseException;
+import com.wipay.payment.dynamodb.configure.DynamoDbConfiguration;
 import com.wipay.payment.dynamodb.model.AuditPayment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class DynamoDBService {
     @Autowired
     private DynamoDBMapper mapper;
 
-    public boolean createTable(String tableName, String pKey){
+    public boolean createTable(String tbl_audit_payment, String PK){
         AmazonDynamoDB dbClient = dynamoDBConfiguration.amazonDynamoDB();
         CreateTableRequest tableRequest = mapper.generateCreateTableRequest(AuditPayment.class);
 
