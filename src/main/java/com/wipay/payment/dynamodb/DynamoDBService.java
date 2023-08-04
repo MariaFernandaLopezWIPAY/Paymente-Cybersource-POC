@@ -2,10 +2,8 @@ package com.wipay.payment.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
-import com.amazonaws.services.dynamodbv2.model.ListTablesRequest;
-import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
-import com.amazonaws.services.dynamodbv2.model.ResourceInUseException;
+import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.model.*;
 import com.wipay.payment.dynamodb.configure.DynamoDbConfiguration;
 import com.wipay.payment.dynamodb.model.AuditPayment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +18,12 @@ public class DynamoDBService {
     private DynamoDBMapper mapper;
 
     public boolean createTable(String tbl_audit_payment, String PK){
-        AmazonDynamoDB dbClient = dynamoDBConfiguration.amazonDynamoDB();
-        CreateTableRequest tableRequest = mapper.generateCreateTableRequest(AuditPayment.class);
 
         try {
+            String tableName = "tbl_audit_payment";
+            AmazonDynamoDB dbClient = dynamoDBConfiguration.amazonDynamoDB();
+            CreateTableRequest tableRequest = mapper.generateCreateTableRequest(AuditPayment.class);
+            System.out.println(tableExists(tableName));
 
             dbClient.createTable(tableRequest);
             return true;
@@ -35,6 +35,11 @@ public class DynamoDBService {
 
     public boolean tableExists(String tableName){
         AmazonDynamoDB dbClient = dynamoDBConfiguration.amazonDynamoDB();
+        DescribeTableRequest describeTableRequest = new DescribeTableRequest().withTableName(tableName);
+        DescribeTableResult describeTableResult = dbClient.describeTable(describeTableRequest);
+        TableStatus tableStatus = TableStatus.valueOf(describeTableResult.getTable().getTableStatus());
+        System.out.println("Table Status: " + tableStatus);
+
         ListTablesRequest listTablesRequest = new ListTablesRequest()
                 .withExclusiveStartTableName(tableName);
         ListTablesResult listTablesResult = dbClient.listTables(listTablesRequest);
